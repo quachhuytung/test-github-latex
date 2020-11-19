@@ -23,7 +23,7 @@ jobs:
           compile_diff: ./src/main.tex
       - name: Save version
         run: |
-          rm ./src/main.pdf
+          rm -f ./src/main.pdf
           current_time=$(date +%s)
           mkdir -p "versions/$current_time"
           cp main.pdf diff.pdf "versions/$current_time"
