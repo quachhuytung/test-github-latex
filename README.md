@@ -18,6 +18,7 @@
 ---
 ## Result
 ### Result by images
+![Compare result](result.png)
 ### Folder structuring
 - src/: Contain your Tex source code
 - version/: Contain all the version that have been build, named by Unix timestamp
