@@ -1,0 +1,34 @@
+name: Compile and build document, compare changes
+on:
+  push:
+    branches: [ master ]
+jobs:
+  compile-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+        with:
+         fetch-depth: 2
+        
+      - name: Config Git credential
+        run: |
+          git config --global user.name 'Quach Huy Tung'
+          git config --global user.email 'huytung.9729@gmail.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+      - name: Comparing diff
+        uses: tawalaya/latex-diff-action@v1
+        with:
+          root_file: ./src/main.tex
+          compile_diff: ./src/main.tex
+      - name: Save version
+        run: |
+          current_time=$(date +%s)
+          mkdir -p "versions/$current_time"
+          cp main.pdf diff.pdf "versions/$current_time"
+      
+      - name: Commit to result to repo
+        run: |
+          git add .
+          git commit -am "Automated report"
+          git push    
